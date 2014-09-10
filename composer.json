@@ -1,0 +1,5 @@
+{
+    "require": {
+        "abbe98/simple-pdo": "1.1.*"
+    }
+}
