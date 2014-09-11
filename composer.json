@@ -1,5 +1,23 @@
 {
+    "name": "abbe98/request-logging",
+    "description": "A simpe PHP class for logging incoming requests.",
+    "keywords": ["logging","requests", "ip", "database"],
+    "homepage": "https://github.com/Abbe98/request-logging",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Albin Larsson",
+            "homepage": "http://abbe98.github.io/"
+        }
+    ],
     "require": {
+        "php": ">=5.0.0",
         "abbe98/simple-pdo": "1.1.*"
-    }
+    },
+    "autoload": {
+        "psr-0": {
+            "request-logging": ""
+        }
+    },
+   "minimum-stability": "stable"
 }

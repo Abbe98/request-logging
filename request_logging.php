@@ -9,10 +9,10 @@ class ReqLog {
 
     // if HTTP_X_FORWARDED_FOR is set save it too
     if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-      $http_forwared = $_SERVER['HTTP_X_FORWARDED_FOR'];
+      $http_forwarded = $_SERVER['HTTP_X_FORWARDED_FOR'];
     } else {
     	// set to something
-      $http_forwared = 'null';
+      $http_forwarded = 'null';
     }
 
     // save browser user agent string
@@ -24,7 +24,7 @@ class ReqLog {
     // insert in database
     $database->query("INSERT INTO `requests` (ip, http_forwared, browser_ua) VALUES (:ip, :http_forwared, :browser_ua)");
     $database->bind(':ip', $this->ip);
-    $database->bind(':http_forwared', $http_forwared);
+    $database->bind(':http_forwared', $http_forwarded);
     $database->bind(':browser_ua', $this->browser_ua);
     $database->execute();
   }
