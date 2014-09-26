@@ -3,7 +3,8 @@ class ReqLog {
   private $ip;
   private $browser_ua;
 
-  public function __construct() {
+  public function __construct($tag = 'log') {
+
     // get IP
     $this->ip = $_SERVER['REMOTE_ADDR'];
 
@@ -11,7 +12,7 @@ class ReqLog {
     if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
       $http_forwarded = $_SERVER['HTTP_X_FORWARDED_FOR'];
     } else {
-    	// set to something
+      // set to something
       $http_forwarded = 'null';
     }
 
@@ -22,10 +23,11 @@ class ReqLog {
     $database = SimplePDO::getInstance();
 
     // insert in database
-    $database->query("INSERT INTO `requests` (ip, http_forwared, browser_ua) VALUES (:ip, :http_forwared, :browser_ua)");
+    $database->query("INSERT INTO `requests` (ip, http_forwared, browser_ua, tag) VALUES (:ip, :http_forwared, :browser_ua, :tag)");
     $database->bind(':ip', $this->ip);
     $database->bind(':http_forwared', $http_forwarded);
     $database->bind(':browser_ua', $this->browser_ua);
+    $database->bind(':tag', $tag);
     $database->execute();
   }
 
