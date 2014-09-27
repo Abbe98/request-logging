@@ -31,16 +31,28 @@ class ReqLog {
     $database->execute();
   }
 
-  public function num_visits() {
+  public function num_visits($tag = 'log') {
     $database = SimplePDO::getInstance();
 
-    // count numbers of rows that has equal ip and UA string
-    $database->query("SELECT * FROM `requests` WHERE `ip` = :ip AND `browser_ua` = :browser_ua");
-    $database->bind(':ip', $this->ip);
-    $database->bind(':browser_ua', $this->browser_ua);
-    $database->execute();
+    if ($tag === 'log') {
+      // count numbers of rows that has equal ip and UA string
+      $database->query("SELECT * FROM `requests` WHERE `ip` = :ip AND `browser_ua` = :browser_ua");
+      $database->bind(':ip', $this->ip);
+      $database->bind(':browser_ua', $this->browser_ua);
+      $database->execute();
 
-    return $database->rowCount();
+      return $database->rowCount();
+    } else {
+      // if tag is provided
+      // count numbers of rows that has equal ip and UA string and have the requested tag
+      $database->query("SELECT * FROM `requests` WHERE `ip` = :ip AND `browser_ua` = :browser_ua AND `tag` = :tag");
+      $database->bind(':ip', $this->ip);
+      $database->bind(':browser_ua', $this->browser_ua);
+      $database->bind(':tag', $tag);
+      $database->execute();
+
+      return $database->rowCount();
+    }
   }
 
   public function num_ip_visits() {
