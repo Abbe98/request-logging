@@ -55,15 +55,26 @@ class ReqLog {
     }
   }
 
-  public function num_ip_visits() {
+  public function num_ip_visits($tag = 'log') {
     $database = SimplePDO::getInstance();
 
-    // count numbers of rows that has equal ip
-    $database->query("SELECT * FROM `requests` WHERE `ip` = :ip");
-    $database->bind(':ip', $this->ip);
-    $database->execute();
+    if ($tag === 'log') {
+      // count numbers of rows that has equal ip
+      $database->query("SELECT * FROM `requests` WHERE `ip` = :ip");
+      $database->bind(':ip', $this->ip);
+      $database->execute();
 
-    return $database->rowCount();
+      return $database->rowCount();
+    } else {
+      // if tag is provided
+      // count numbers of rows that has equal ip
+      $database->query("SELECT * FROM `requests` WHERE `ip` = :ip AND `tag` = :tag");
+      $database->bind(':ip', $this->ip);
+      $database->bind(':tag', $tag);
+      $database->execute();
+
+      return $database->rowCount();
+    }
   }
 
   public function this_browser_percent() {
